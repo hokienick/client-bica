@@ -3,13 +3,34 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 
+const SERVICES = ["Catering", "DJ", "Live music", "Photo / Video"] as const;
+
 export default function PrivateEventsPage() {
-  const [form, setForm] = useState({ name: "", email: "", date: "", guests: "", details: "" });
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    signUpForNews: false,
+    phone: "",
+    services: [] as string[],
+    date: "",
+    budget: "",
+    message: "",
+  });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+  };
+
+  const toggleService = (service: string) => {
+    setForm((f) => ({
+      ...f,
+      services: f.services.includes(service)
+        ? f.services.filter((s) => s !== service)
+        : [...f.services, service],
+    }));
   };
 
   return (
@@ -86,59 +107,149 @@ export default function PrivateEventsPage() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {[
-                  { id: "name", label: "Your name", type: "text", placeholder: "Name" },
-                  { id: "email", label: "Email", type: "email", placeholder: "email@example.com" },
-                  { id: "date", label: "Preferred date", type: "text", placeholder: "e.g. July 12, 2026" },
-                  { id: "guests", label: "Number of guests", type: "text", placeholder: "e.g. 40" },
-                ].map((field) => (
-                  <div key={field.id}>
-                    <label htmlFor={field.id} className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--muted)" }}>
-                      {field.label}
+              <form onSubmit={handleSubmit} className="space-y-5">
+
+                {/* Name — split first/last */}
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { id: "firstName", label: "First name", placeholder: "First" },
+                    { id: "lastName", label: "Last name", placeholder: "Last" },
+                  ].map((field) => (
+                    <div key={field.id}>
+                      <label htmlFor={field.id} className="block text-xs font-semibold mb-1.5" style={{ color: "var(--muted)" }}>
+                        {field.label} <span style={{ color: "var(--accent)" }}>*</span>
+                      </label>
+                      <input
+                        id={field.id}
+                        type="text"
+                        placeholder={field.placeholder}
+                        required
+                        value={form[field.id as "firstName" | "lastName"]}
+                        onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
+                        className="w-full px-4 py-3 text-sm outline-none bg-background"
+                        style={{ border: "1px solid var(--border)", borderRadius: "2px", color: "var(--foreground)" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Email + newsletter opt-in */}
+                <div>
+                  <label htmlFor="email" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--muted)" }}>
+                    Email <span style={{ color: "var(--accent)" }}>*</span>
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="email@example.com"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className="w-full px-4 py-3 text-sm outline-none bg-background"
+                    style={{ border: "1px solid var(--border)", borderRadius: "2px", color: "var(--foreground)" }}
+                  />
+                  <label className="flex items-center gap-2.5 mt-2.5 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={form.signUpForNews}
+                      onChange={(e) => setForm({ ...form, signUpForNews: e.target.checked })}
+                      className="w-3.5 h-3.5 accent-[var(--accent)]"
+                    />
+                    <span className="text-xs" style={{ color: "var(--muted)" }}>Sign up for news and updates</span>
+                  </label>
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label htmlFor="phone" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--muted)" }}>
+                    Phone
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    placeholder="(619) 555-0100"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="w-full px-4 py-3 text-sm outline-none bg-background"
+                    style={{ border: "1px solid var(--border)", borderRadius: "2px", color: "var(--foreground)" }}
+                  />
+                </div>
+
+                {/* Services checkboxes */}
+                <div>
+                  <p className="text-xs font-semibold mb-2" style={{ color: "var(--muted)" }}>What does your event need?</p>
+                  <div className="flex flex-wrap gap-3">
+                    {SERVICES.map((service) => (
+                      <label key={service} className="flex items-center gap-2 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={form.services.includes(service)}
+                          onChange={() => toggleService(service)}
+                          className="w-3.5 h-3.5 accent-[var(--accent)]"
+                        />
+                        <span className="text-sm">{service}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Date + Budget */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label htmlFor="date" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--muted)" }}>
+                      Preferred date
                     </label>
                     <input
-                      id={field.id}
-                      type={field.type}
-                      placeholder={field.placeholder}
-                      required
-                      value={form[field.id as keyof typeof form]}
-                      onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
-                      className="w-full px-4 py-3 text-sm outline-none transition-all bg-background"
-                      style={{
-                        border: "1px solid var(--border)",
-                        borderRadius: "2px",
-                        color: "var(--foreground)",
-                      }}
+                      id="date"
+                      type="date"
+                      value={form.date}
+                      onChange={(e) => setForm({ ...form, date: e.target.value })}
+                      className="w-full px-4 py-3 text-sm outline-none bg-background"
+                      style={{ border: "1px solid var(--border)", borderRadius: "2px", color: "var(--foreground)" }}
                     />
                   </div>
-                ))}
+                  <div>
+                    <label htmlFor="budget" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--muted)" }}>
+                      Budget
+                    </label>
+                    <input
+                      id="budget"
+                      type="text"
+                      placeholder="e.g. $2,000"
+                      value={form.budget}
+                      onChange={(e) => setForm({ ...form, budget: e.target.value })}
+                      className="w-full px-4 py-3 text-sm outline-none bg-background"
+                      style={{ border: "1px solid var(--border)", borderRadius: "2px", color: "var(--foreground)" }}
+                    />
+                  </div>
+                </div>
 
+                {/* Message */}
                 <div>
-                  <label htmlFor="details" className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--muted)" }}>
-                    Tell us about the event
+                  <label htmlFor="message" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--muted)" }}>
+                    Message <span style={{ color: "var(--accent)" }}>*</span>
                   </label>
+                  <p className="text-xs mb-2" style={{ color: "var(--muted)" }}>
+                    Clue us in on the details and we&rsquo;ll help bring it to life.
+                  </p>
                   <textarea
-                    id="details"
+                    id="message"
                     rows={5}
-                    placeholder="What are you planning? Any special requirements?"
-                    value={form.details}
-                    onChange={(e) => setForm({ ...form, details: e.target.value })}
-                    className="w-full px-4 py-3 text-sm outline-none transition-all resize-none bg-background"
-                    style={{
-                      border: "1px solid var(--border)",
-                      borderRadius: "2px",
-                      color: "var(--foreground)",
-                    }}
+                    required
+                    placeholder="Tell us about your event..."
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    className="w-full px-4 py-3 text-sm outline-none resize-none bg-background"
+                    style={{ border: "1px solid var(--border)", borderRadius: "2px", color: "var(--foreground)" }}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-4 text-sm font-bold tracking-wide text-white transition-opacity duration-200 hover:opacity-85"
+                  className="w-full py-4 text-sm font-bold text-white transition-opacity duration-200 hover:opacity-85"
                   style={{ backgroundColor: "var(--foreground)", borderRadius: "2px" }}
                 >
-                  Send inquiry
+                  Submit
                 </button>
               </form>
             )}
