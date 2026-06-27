@@ -9,19 +9,15 @@ export default function Footer() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          {/* Logo + tagline */}
-          <div className="flex items-center gap-3">
+          {/* Logo */}
+          <div>
             <Image
-              src="https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/b1734d00-4a46-4e87-bf18-f6ce143ace35/bica-fish-sideways-website.png"
-              alt="bica fish logo"
-              width={48}
-              height={30}
-              className="opacity-80"
+              src="https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/f14f305c-dafc-4024-bddc-0ce2b176aed5/Remove+background+project.png?format=1500w"
+              alt="bica"
+              width={56}
+              height={44}
+              className="object-contain opacity-80"
             />
-            <div>
-              <p className="font-display font-bold text-base" style={{ letterSpacing: "-0.03em" }}>bica</p>
-              <p className="text-xs" style={{ color: "var(--muted)" }}>little cafe</p>
-            </div>
           </div>
 
           {/* Links */}

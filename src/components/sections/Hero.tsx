@@ -18,9 +18,9 @@ export default function Hero() {
         <Image
           src="https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/b1734d00-4a46-4e87-bf18-f6ce143ace35/bica-fish-sideways-website.png"
           alt=""
-          width={220}
-          height={140}
-          className="select-none"
+          width={200}
+          height={130}
+          className="select-none object-contain"
           aria-hidden
         />
       </motion.div>

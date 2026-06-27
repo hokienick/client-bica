@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+
+const LOGO = "https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/f14f305c-dafc-4024-bddc-0ce2b176aed5/Remove+background+project.png?format=1500w";
 
 const links = [
   { href: "/events", label: "Events" },
@@ -21,26 +24,14 @@ export default function Nav() {
       }}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 group"
-          style={{ color: "var(--foreground)" }}
-        >
-          <svg
-            width="28"
-            height="18"
-            viewBox="0 0 80 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="transition-transform duration-300 group-hover:scale-105"
-          >
-            <path d="M60 25C60 25 45 8 20 8C10 8 2 16 2 25C2 34 10 42 20 42C45 42 60 25 60 25Z" fill="currentColor" />
-            <path d="M55 25L75 14L68 25L75 36L55 25Z" fill="currentColor" />
-            <circle cx="18" cy="22" r="2.5" fill="var(--background)" />
-          </svg>
-          <span className="font-display font-bold text-lg leading-none" style={{ letterSpacing: "-0.03em" }}>
-            bica
-          </span>
+        <Link href="/" className="group">
+          <Image
+            src={LOGO}
+            alt="bica"
+            width={52}
+            height={40}
+            className="object-contain transition-opacity duration-200 group-hover:opacity-70"
+          />
         </Link>
 
         <nav className="flex items-center gap-8">
