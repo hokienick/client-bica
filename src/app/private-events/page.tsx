@@ -13,38 +13,54 @@ export default function PrivateEventsPage() {
   };
 
   return (
-    <main className="min-h-screen pt-24 pb-24 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
-          {/* Left: copy */}
+    <main className="min-h-screen">
+      {/* Hero bar */}
+      <div
+        className="pt-32 pb-16 px-6"
+        style={{ backgroundColor: "var(--foreground)", color: "var(--ink-inverse)" }}
+      >
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-            className="lg:sticky lg:top-28"
           >
             <h1
-              className="font-display font-bold leading-tight mb-6"
-              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", letterSpacing: "-0.03em" }}
+              className="font-display font-extrabold leading-tight"
+              style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", letterSpacing: "-0.04em" }}
             >
-              Private events<br />& catering.
+              Private events<br />&amp; catering.
             </h1>
-            <p className="text-base leading-relaxed mb-4 max-w-prose" style={{ color: "var(--muted)" }}>
-              The patio seats up to 80. The coffee is good. The neighbors are friendly.
+            <p className="mt-4 text-base max-w-md" style={{ color: "rgba(255,255,255,0.6)" }}>
+              The patio seats up to 80. The coffee is good. Tell us what you&rsquo;re thinking.
             </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="px-6 py-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+          {/* Left: details */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1], delay: 0.1 }}
+          >
             <p className="text-base leading-relaxed mb-8 max-w-prose" style={{ color: "var(--muted)" }}>
-              Birthdays, company gatherings, pop-ups, film screenings, supper clubs — bica has hosted them all. Tell us what you&rsquo;re thinking.
+              Birthdays, company gatherings, pop-ups, film screenings, supper clubs. bica has hosted them all. Use the form and we&rsquo;ll be in touch within 48 hours.
             </p>
 
-            <div className="space-y-4">
+            <div className="space-y-0 divide-y" style={{ borderColor: "var(--border)" }}>
               {[
                 { label: "Location", value: "3569 Adams Ave, Normal Heights" },
                 { label: "Capacity", value: "Up to 80 guests (patio + indoor)" },
-                { label: "Hours", value: "After 4pm, 7 days a week" },
+                { label: "Availability", value: "After 4pm, 7 days a week" },
                 { label: "Contact", value: "info@bica-sd.com" },
               ].map((item) => (
-                <div key={item.label} className="flex gap-4 text-sm">
-                  <span className="font-medium w-24 shrink-0">{item.label}</span>
+                <div key={item.label} className="flex gap-8 py-4 text-sm">
+                  <span className="font-semibold w-24 shrink-0">{item.label}</span>
                   <span style={{ color: "var(--muted)" }}>{item.value}</span>
                 </div>
               ))}
@@ -55,14 +71,14 @@ export default function PrivateEventsPage() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1], delay: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1], delay: 0.15 }}
           >
             {submitted ? (
-              <div className="py-16 text-center">
-                <p
-                  className="font-display font-bold text-2xl mb-3"
-                  style={{ letterSpacing: "-0.03em" }}
-                >
+              <div
+                className="p-12 text-center"
+                style={{ border: "1px solid var(--border)", borderRadius: "2px" }}
+              >
+                <p className="font-display font-bold text-2xl mb-2" style={{ letterSpacing: "-0.03em" }}>
                   We&rsquo;ll be in touch.
                 </p>
                 <p className="text-sm" style={{ color: "var(--muted)" }}>
@@ -70,7 +86,7 @@ export default function PrivateEventsPage() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 {[
                   { id: "name", label: "Your name", type: "text", placeholder: "Name" },
                   { id: "email", label: "Email", type: "email", placeholder: "email@example.com" },
@@ -78,7 +94,7 @@ export default function PrivateEventsPage() {
                   { id: "guests", label: "Number of guests", type: "text", placeholder: "e.g. 40" },
                 ].map((field) => (
                   <div key={field.id}>
-                    <label htmlFor={field.id} className="block text-sm font-medium mb-1.5">
+                    <label htmlFor={field.id} className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--muted)" }}>
                       {field.label}
                     </label>
                     <input
@@ -88,19 +104,18 @@ export default function PrivateEventsPage() {
                       required
                       value={form[field.id as keyof typeof form]}
                       onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
-                      className="w-full px-4 py-3 text-sm outline-none focus:ring-1 transition-all bg-background"
+                      className="w-full px-4 py-3 text-sm outline-none transition-all bg-background"
                       style={{
                         border: "1px solid var(--border)",
                         borderRadius: "2px",
-                        // @ts-expect-error CSS custom properties
-                        "--tw-ring-color": "var(--accent)",
+                        color: "var(--foreground)",
                       }}
                     />
                   </div>
                 ))}
 
                 <div>
-                  <label htmlFor="details" className="block text-sm font-medium mb-1.5">
+                  <label htmlFor="details" className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--muted)" }}>
                     Tell us about the event
                   </label>
                   <textarea
@@ -109,19 +124,18 @@ export default function PrivateEventsPage() {
                     placeholder="What are you planning? Any special requirements?"
                     value={form.details}
                     onChange={(e) => setForm({ ...form, details: e.target.value })}
-                    className="w-full px-4 py-3 text-sm outline-none focus:ring-1 transition-all resize-none bg-background"
+                    className="w-full px-4 py-3 text-sm outline-none transition-all resize-none bg-background"
                     style={{
                       border: "1px solid var(--border)",
                       borderRadius: "2px",
-                      // @ts-expect-error CSS custom properties
-                      "--tw-ring-color": "var(--accent)",
+                      color: "var(--foreground)",
                     }}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 text-sm font-medium text-white transition-opacity duration-200 hover:opacity-85"
+                  className="w-full py-4 text-sm font-bold tracking-wide text-white transition-opacity duration-200 hover:opacity-85"
                   style={{ backgroundColor: "var(--foreground)", borderRadius: "2px" }}
                 >
                   Send inquiry

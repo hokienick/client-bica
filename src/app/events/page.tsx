@@ -11,6 +11,7 @@ const events = [
     tag: "Dining",
     description: "Eight chefs. Eight interpretations. One 150-lb bluefin. DJ, wine, and beer included. $125/guest.",
     image: "https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/1780510200642-BDW5J23WDEB0IKJQSCXG/tuna+take+down+print.PNG",
+    featured: true,
   },
   {
     title: "Uncommon Sensing",
@@ -85,11 +86,11 @@ const events = [
     image: "https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/1778649543749-41NHP5K7WVQIWZ5Z1OZ9/ARC-Clubhouse-Posters.PNG",
   },
   {
-    title: "Cinema Crudité",
+    title: "Cinema Crudite",
     date: "Mar 2026",
     time: "Evening",
     tag: "Film",
-    description: "Film screening with crudités. A bica original.",
+    description: "Film screening with crudites. A bica original.",
     image: "https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/1773815083021-WFPL8FYYGJ3SI1GC7AXX/IMG_9358.jpg",
   },
   {
@@ -102,102 +103,118 @@ const events = [
   },
 ];
 
-const tagColors: Record<string, string> = {
-  "Dining": "oklch(0.93 0.06 60)",
-  "Workshop": "oklch(0.90 0.06 145)",
-  "Community": "oklch(0.92 0.04 250)",
-  "Industry Night": "oklch(0.90 0.03 300)",
-  "Drinks": "oklch(0.93 0.06 80)",
-  "Music": "oklch(0.92 0.04 320)",
-  "Film": "oklch(0.90 0.03 200)",
-};
-
-const tagTextColors: Record<string, string> = {
-  "Dining": "oklch(0.40 0.10 60)",
-  "Workshop": "oklch(0.35 0.12 145)",
-  "Community": "oklch(0.35 0.10 250)",
-  "Industry Night": "oklch(0.35 0.08 300)",
-  "Drinks": "oklch(0.40 0.10 80)",
-  "Music": "oklch(0.35 0.08 320)",
-  "Film": "oklch(0.35 0.08 200)",
-};
+const featured = events[0];
+const rest = events.slice(1);
 
 export default function EventsPage() {
   return (
     <main className="min-h-screen pt-24 pb-24">
       {/* Header */}
-      <div className="px-6 mb-16">
-        <div className="max-w-7xl mx-auto">
+      <div className="px-6 mb-12">
+        <div className="max-w-7xl mx-auto border-b pb-10" style={{ borderColor: "var(--border)" }}>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
           >
             <h1
-              className="font-display font-bold leading-none mb-3"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", letterSpacing: "-0.03em" }}
+              className="font-display font-extrabold leading-none"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", letterSpacing: "-0.04em" }}
             >
-              What&rsquo;s on at bica
+              What&rsquo;s on
             </h1>
-            <p className="text-base max-w-lg" style={{ color: "var(--muted)" }}>
-              Supper clubs, workshops, music, and things that don&rsquo;t have a name yet. Check back often.
+            <p className="text-base md:max-w-xs md:text-right pb-1" style={{ color: "var(--muted)" }}>
+              Supper clubs, workshops, music, and things that don&rsquo;t have a name yet.
             </p>
           </motion.div>
         </div>
       </div>
 
-      {/* Events grid */}
       <div className="px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event, i) => (
-            <motion.article
-              key={event.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1], delay: (i % 3) * 0.06 }}
-              className="group bg-background overflow-hidden hover:shadow-md transition-shadow duration-300"
-              style={{ border: "1px solid var(--border)", borderRadius: "2px" }}
-            >
-              <div className="relative aspect-square overflow-hidden bg-surface">
-                <Image
-                  src={event.image}
-                  alt={event.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span
-                    className="text-xs font-medium tracking-wide uppercase px-2 py-0.5"
-                    style={{
-                      backgroundColor: tagColors[event.tag] || "var(--accent-light)",
-                      color: tagTextColors[event.tag] || "var(--accent)",
-                      borderRadius: "2px",
-                    }}
-                  >
-                    {event.tag}
-                  </span>
-                  <span className="text-xs" style={{ color: "var(--muted)" }}>
-                    {event.date}
-                  </span>
+        <div className="max-w-7xl mx-auto">
+
+          {/* Featured event — full width */}
+          <motion.article
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+            className="group grid grid-cols-1 md:grid-cols-2 gap-0 mb-8 overflow-hidden"
+            style={{ border: "1px solid var(--border)", borderRadius: "2px" }}
+          >
+            <div className="relative aspect-square md:aspect-auto md:min-h-[420px] overflow-hidden bg-surface">
+              <Image
+                src={featured.image}
+                alt={featured.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-8 md:p-12 flex flex-col justify-center" style={{ backgroundColor: "var(--foreground)" }}>
+              <p className="text-xs font-medium mb-4 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>
+                {featured.tag} &middot; {featured.date}
+              </p>
+              <h2
+                className="font-display font-extrabold text-white leading-tight mb-4"
+                style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)", letterSpacing: "-0.03em" }}
+              >
+                {featured.title}
+              </h2>
+              <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.65)" }}>
+                {featured.description}
+              </p>
+              <p className="text-sm font-semibold" style={{ color: "var(--accent)" }}>
+                {featured.time}
+              </p>
+            </div>
+          </motion.article>
+
+          {/* Rest of events — 3 col grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: "var(--border)" }}>
+            {rest.map((event, i) => (
+              <motion.article
+                key={event.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1], delay: (i % 3) * 0.05 }}
+                className="group bg-background overflow-hidden"
+              >
+                <div className="relative aspect-square overflow-hidden bg-surface">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-                <h2
-                  className="font-display font-bold mb-1"
-                  style={{ fontSize: "1.125rem", letterSpacing: "-0.02em" }}
-                >
-                  {event.title}
-                </h2>
-                <p className="text-xs mb-3 font-medium" style={{ color: "var(--accent)" }}>
-                  {event.time}
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
-                  {event.description}
-                </p>
-              </div>
-            </motion.article>
-          ))}
+                <div className="p-5">
+                  <div className="flex items-baseline justify-between mb-2.5">
+                    <span className="text-xs font-medium" style={{ color: "var(--accent)" }}>
+                      {event.tag}
+                    </span>
+                    <span className="text-xs" style={{ color: "var(--muted)" }}>
+                      {event.date}
+                    </span>
+                  </div>
+                  <h2
+                    className="font-display font-bold mb-1"
+                    style={{ fontSize: "1.05rem", letterSpacing: "-0.02em" }}
+                  >
+                    {event.title}
+                  </h2>
+                  <p className="text-xs mb-3" style={{ color: "var(--muted)" }}>
+                    {event.time}
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--foreground)", opacity: 0.65 }}>
+                    {event.description}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
         </div>
       </div>
     </main>
