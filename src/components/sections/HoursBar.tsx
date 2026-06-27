@@ -12,26 +12,23 @@ export default function HoursBar() {
       className="py-10 px-6"
       style={{ backgroundColor: "var(--foreground)" }}
     >
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: "0 0 6px rgba(74,222,128,0.7)" }} />
-          <p className="font-display font-semibold text-sm tracking-tight" style={{ color: "var(--ink-inverse)", letterSpacing: "-0.01em" }}>
-            Open daily &middot; 6:30am to 4:00pm
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <p className="font-display font-semibold text-sm" style={{ color: "var(--ink-inverse)", letterSpacing: "-0.01em" }}>
+          Open daily &middot; 6:30am to 4:00pm
+        </p>
         <a
           href="https://maps.google.com/?q=3569+Adams+Ave+San+Diego+CA+92116"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm transition-opacity duration-200 hover:opacity-100"
-          style={{ color: "rgba(255,255,255,0.5)" }}
+          className="text-sm transition-opacity duration-200 hover:opacity-80"
+          style={{ color: "rgba(255,255,255,0.45)" }}
         >
-          3569 Adams Ave &middot; Normal Heights, San Diego
+          3569 Adams Ave &middot; Normal Heights
         </a>
         <a
           href="mailto:info@bica-sd.com"
-          className="text-sm transition-opacity duration-200 hover:opacity-100"
-          style={{ color: "rgba(255,255,255,0.5)" }}
+          className="text-sm transition-opacity duration-200 hover:opacity-80"
+          style={{ color: "rgba(255,255,255,0.45)" }}
         >
           info@bica-sd.com
         </a>
