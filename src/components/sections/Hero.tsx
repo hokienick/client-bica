@@ -32,26 +32,25 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
         >
-          {/* Main wordmark */}
-          <h1
-            className="font-display font-extrabold leading-none tracking-tight"
-            style={{
-              fontSize: "clamp(5rem, 18vw, 13rem)",
-              letterSpacing: "-0.04em",
-              color: "var(--foreground)",
-            }}
-          >
-            bica
-          </h1>
+          {/* Actual b.i.c.a logo at hero scale */}
+          <h1 className="sr-only">bica</h1>
+          <Image
+            src="https://images.squarespace-cdn.com/content/v1/6572b632bfc5012951086e89/f14f305c-dafc-4024-bddc-0ce2b176aed5/Remove+background+project.png?format=1500w"
+            alt="bica"
+            width={900}
+            height={260}
+            priority
+            className="object-contain object-left"
+            style={{ width: "clamp(280px, 65vw, 780px)", height: "auto" }}
+          />
 
-          {/* Tagline — asymmetrically indented, contrasting weight */}
+          {/* Tagline */}
           <p
-            className="font-display font-medium leading-none mt-1"
+            className="font-display font-medium leading-none mt-3"
             style={{
-              fontSize: "clamp(1.25rem, 3.5vw, 2.25rem)",
+              fontSize: "clamp(1.1rem, 3vw, 2rem)",
               letterSpacing: "-0.02em",
               color: "var(--muted)",
-              paddingLeft: "clamp(0.25rem, 1vw, 0.75rem)",
             }}
           >
             little cafe.
